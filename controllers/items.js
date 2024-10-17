@@ -42,8 +42,10 @@ const getItem = async (req, res) => {
 };
 
 const createItem = async (req, res) => {
-    // console.log(req.body);
-    // console.log(req.user);
+    console.log("createItem req.body = ", req.body); // { itemName: 'will-table', price: 100, quantity: 1, negotiatble: true }
+
+    // req.user được tạo ở Middleware "/middleware/authentication.js"
+    // console.log("createItem req.user = ", req.user); // { userId: '670f8c9c31f33d22fe2cb0dd', name: 'Nguyen' }
 
     req.body.createdBy = req.user.userId;
 
@@ -56,13 +58,15 @@ const createItem = async (req, res) => {
 
 const updateItem = async (req, res) => {
     const {
-        body: { itemName, price, status },
+        body: { itemName, price, quantity },
         user: { userId },
         params: { id: itemId },
     } = req;
 
-    if (itemName === "" || price === "") {
-        throw new BadRequestError("Item name or Price can not be empty!");
+    if (itemName === "" || price === "" || quantity === "") {
+        throw new BadRequestError(
+            "Item name or Price or Quantity can not be empty!"
+        );
     }
 
     const item = await Item.findByIdAndUpdate(

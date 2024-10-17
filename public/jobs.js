@@ -14,31 +14,23 @@ import { showAddEdit } from "./addEdit.js";
 // import { showLoginRegister } from "./loginRegister.js";
 import { showLogin } from "./login.js";
 
-// let jobsDiv = null;
 let itemsDiv = null;
 
-// let jobsTable = null;
 let itemsTable = null;
 
-// let jobsTableHeader = null;
 let itemsTableHeader = null;
 
 /* ////////////////////////////////////////////////// */
-// export const handleJobs = () => {
 export const handleItems = () => {
     //
-    // jobsDiv = document.getElementById("jobs");
     itemsDiv = document.getElementById("items");
 
     const logoff = document.getElementById("logoff");
 
-    // const addJob = document.getElementById("add-job");
     const addItem = document.getElementById("add-item");
 
-    // jobsTable = document.getElementById("jobs-table");
     itemsTable = document.getElementById("items-table");
 
-    // jobsTableHeader = document.getElementById("jobs-table-header");
     itemsTableHeader = document.getElementById("items-table-header");
 
     itemsDiv.addEventListener("click", (e) => {
@@ -68,7 +60,7 @@ export const handleItems = () => {
                 //
                 enableInput(false);
 
-                deleteJobs(e.target.dataset.id);
+                deleteItems(e.target.dataset.id);
 
                 enableInput(true);
             }
@@ -77,22 +69,13 @@ export const handleItems = () => {
 };
 
 ///////////////////////////////////////////////////////////////
-// Chú ý: mỗi lần gọi đến hàm showJobs()
+// Chú ý: mỗi lần gọi đến hàm showItems()
 // là đều sẽ truy cập đến database
 // ==>>  tức là sẽ lấy data về Client
-// export const showJobs = async () => {
 export const showItems = async () => {
     //
     try {
         enableInput(false);
-
-        // const response = await fetch("/api/v1/jobs", {
-        //     method: "GET",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         Authorization: `Bearer ${token}`,
-        //     },
-        // });
 
         const response = await fetch("/api/v1/items", {
             method: "GET",
@@ -103,7 +86,7 @@ export const showItems = async () => {
         });
 
         const data = await response.json();
-        console.log("List Data Job = ", data);
+        console.log("List Data Item = ", data);
 
         let children = [itemsTableHeader];
 
@@ -113,27 +96,20 @@ export const showItems = async () => {
                 itemsTable.replaceChildren(...children); // clear this for safety
                 //
             } else {
-                // for (let i = 0; i < data.jobs.length; i++) {
                 for (let i = 0; i < data.items.length; i++) {
                     //
                     let rowEntry = document.createElement("tr");
 
-                    // let editButton = `<td><button type="button" class="editButton" data-id=${data.jobs[i]._id}>edit</button></td>`;
-                    let editButton = `<td><button type="button" class="editButton" data-id=${data.items[i]._id}>edit</button></td>`;
+                    let editButton = `<td><button type="button" class="editButton" data-id=${data.items[i]._id}>Edit</button></td>`;
 
-                    // let deleteButton = `<td><button type="button" class="deleteButton" data-id=${data.jobs[i]._id}>delete</button></td>`;
-                    let deleteButton = `<td><button type="button" class="deleteButton" data-id=${data.items[i]._id}>delete</button></td>`;
-
-                    // let rowHTML = `
-                    //             <td>${data.jobs[i].company}</td>
-                    //             <td>${data.jobs[i].position}</td>
-                    //             <td>${data.jobs[i].status}</td>
-                    //             <div>${editButton}${deleteButton}</div>`;
+                    let deleteButton = `<td><button type="button" class="deleteButton" data-id=${data.items[i]._id}>Delete</button></td>`;
 
                     let rowHTML = `
                                 <td>${data.items[i].itemName}</td>
                                 <td>${data.items[i].price}</td>
                                 <td>${data.items[i].status}</td>
+                                <td>${data.items[i].quantity}</td>
+                                <td>${data.items[i].negotiable}</td>
                                 <div>${editButton}${deleteButton}</div>`;
 
                     // Gán data mới tạo ở trên vào Table row
@@ -143,7 +119,6 @@ export const showItems = async () => {
                     children.push(rowEntry);
                 }
 
-                // jobsTable.replaceChildren(...children);
                 itemsTable.replaceChildren(...children);
             }
         } else if (response.status === 401) {
@@ -166,26 +141,17 @@ export const showItems = async () => {
 
     enableInput(true);
 
-    // setDiv(jobsDiv);
     setDiv(itemsDiv);
 };
 
 ///////////////////////////////////////////////////////////////
-const deleteJobs = async (itemId) => {
+const deleteItems = async (itemId) => {
     // jobId = "66d62c2108859ec7068897bb";
     // test error ==>> đúng ID syntax but sai số cuối
     // jobId = "66d62c2108859ec7068897bc";
     // jobId = "66d62c2108859ec7068897bbd";
 
     try {
-        // const response = await fetch(`/api/v1/jobs/${jobId}`, {
-        //     method: "DELETE",
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         Authorization: `Bearer ${token}`,
-        //     },
-        // });
-
         const response = await fetch(`/api/v1/items/${itemId}`, {
             method: "DELETE",
             headers: {
@@ -221,7 +187,6 @@ const deleteJobs = async (itemId) => {
             showItems();
         }
 
-        // showJobs();
         // showItems();
         //
     } catch (err) {
@@ -230,7 +195,6 @@ const deleteJobs = async (itemId) => {
         message.textContent = "A communications error has occurred.";
 
         //
-        // showJobs();
         showItems();
     }
 };

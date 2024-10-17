@@ -6,6 +6,10 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- main css -->
+        <link rel="stylesheet" href="./style.css" />
+
         <title>Jobs List</title>
     </head>
     <body>
@@ -18,72 +22,61 @@
 
         <!-- ======================================= -->
         <div id="logon-register" style="display: none">
-            <button type="button" id="logon">logon</button>
-            <button type="button" id="register">register</button>
+            <!-- <div id="logon-register" style="display: block"> -->
+            <button type="button" id="logon">Logon</button>
+            <button type="button" id="register">Register</button>
         </div>
 
         <div id="logon-div" style="display: none">
+            <!-- <div id="logon-div" style="display: block"> -->
             <form>
                 <div>
-                    <label for="email">email:</label>
+                    <label for="email">Email:</label>
                     <input type="email" id="email" />
                 </div>
 
                 <div>
-                    <label for="password">password:</label>
+                    <label for="password">Password:</label>
                     <input type="password" id="password" />
                 </div>
 
-                <button type="button" id="logon-button">logon</button>
-                <button type="button" id="logon-cancel">cancel</button>
+                <button type="button" id="logon-button">Logon</button>
+                <button type="button" id="logon-cancel">Cancel</button>
             </form>
         </div>
 
         <div id="register-div" style="display: none">
+            <!-- <div id="register-div" style="display: block"> -->
             <form>
                 <div>
-                    <label for="name">name:</label>
+                    <label for="name">Name:</label>
                     <input type="text" id="name" />
                 </div>
 
                 <div>
-                    <label for="email1">email:</label>
+                    <label for="email1">Email:</label>
                     <input type="email" id="email1" />
                 </div>
 
                 <div>
-                    <label for="password1">password:</label>
+                    <label for="password1">Password:</label>
                     <input type="password" id="password1" />
                 </div>
 
                 <div>
-                    <label for="password2">verify password:</label>
+                    <label for="password2">Verify Password:</label>
                     <input type="password" id="password2" />
                 </div>
 
-                <button type="button" id="register-button">register</button>
-                <button type="button" id="register-cancel">cancel</button>
+                <button type="button" id="register-button">Register</button>
+                <button type="button" id="register-cancel">Cancel</button>
             </form>
         </div>
 
         <!-- ======================================= -->
-        <!-- <div id="jobs" style="display: none">
-            <p id="jobs-message"></p>
-
-            <table id="jobs-table">
-                <tr id="jobs-table-header">
-                    <th>Company</th>
-                    <th>Position</th>
-                    <th>Status</th>
-                    <th colspan="2"></th>
-                </tr>
-            </table>
-
-            <button type="button" id="add-job">add job</button>
-            <button type="button" id="logoff">log off</button>
-        </div> -->
-
+        <!-- design cho cái này nữa, tạm thời chưa cần -->
         <div id="items" style="display: none">
+            <!-- <div id="items" style="display: block"> -->
             <p id="items-message"></p>
 
             <table id="items-table">
@@ -91,43 +84,37 @@
                     <th>Item Name</th>
                     <th>Price</th>
                     <th>Status</th>
+                    <th>Quantity</th>
+                    <th>Negotiable</th>
                     <th colspan="2"></th>
                 </tr>
+
+                <!-- <tr>
+                    <td>will-computer</td>
+                    <td>12345</td>
+                    <td>available</td>
+                    <td>12</td>
+                    <td>false</td>
+
+                    <div>
+                        <td>
+                            <button>Edit</button>
+                        </td>
+
+                        <td>
+                            <button>Delete</button>
+                        </td>
+                    </div>
+                </tr> -->
             </table>
 
-            <button type="button" id="add-item">add item</button>
-            <button type="button" id="logoff">log off</button>
+            <button type="button" id="add-item">Add Item</button>
+            <button type="button" id="logoff">Log-off</button>
         </div>
 
         <!-- ======================================= -->
-        <!-- <div id="edit-job" style="display: none">
-            <form>
-                <div>
-                    <label for="company">company:</label>
-                    <input type="text" id="company" />
-                </div>
-
-                <div>
-                    <label for="position">position:</label>
-                    <input type="text" id="position" />
-                </div>
-
-                <div>
-                    <label for="status">status:</label>
-
-                    <select id="status">
-                        <option value="pending">pending</option>
-                        <option value="interview">interview</option>
-                        <option value="declined">declined</option>
-                    </select>
-                </div>
-
-                <button type="button" id="adding-job">add</button>
-                <button type="button" id="edit-cancel">cancel</button>
-            </form>
-        </div> -->
-
         <div id="edit-item" style="display: none">
+            <!-- <div id="edit-item" style="display: block"> -->
             <form>
                 <div>
                     <label for="itemName">Items:</label>
@@ -140,6 +127,11 @@
                 </div>
 
                 <div>
+                    <label for="quantity">Quantity:</label>
+                    <input type="text" id="quantity" />
+                </div>
+
+                <div>
                     <label for="status">Status:</label>
 
                     <select id="status">
@@ -149,8 +141,17 @@
                     </select>
                 </div>
 
-                <button type="button" id="adding-item">add</button>
-                <button type="button" id="edit-cancel">cancel</button>
+                <div>
+                    <label for="negotiable">Negotiable:</label>
+
+                    <select id="negotiable">
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </div>
+
+                <button type="button" id="adding-item">Add</button>
+                <button type="button" id="edit-cancel">Cancel</button>
             </form>
         </div>
 
@@ -159,3 +160,7 @@
         <script src="./index.js" type="module"></script>
     </body>
 </html>
+
+<!-- 
+    
+-->

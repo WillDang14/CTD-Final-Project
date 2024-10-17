@@ -52,7 +52,6 @@ export const setToken = (value) => {
 export let message = null;
 
 /* ////////////////////////////////////////////////// */
-// import { showJobs, handleJobs } from "./jobs.js";
 import { showItems, handleItems } from "./jobs.js";
 
 import { showLoginRegister, handleLoginRegister } from "./loginRegister.js";
@@ -78,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     handleLogin();
 
-    // handleJobs();
     handleItems();
 
     handleRegister();
@@ -86,9 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
     handleAddEdit();
 
     if (token) {
-        // showJobs(); // nếu có token rồi thì showJobs
-
-        showItems(); // nếu có token rồi thì showJobs
+        showItems(); // nếu có token rồi thì showItems
     } else {
         showLoginRegister(); //nếu chưa có token thì show lựa chọn Reg-Login
     }

@@ -7,7 +7,6 @@ import {
     setToken,
 } from "./index.js";
 
-// import { showJobs } from "./jobs.js";
 import { showItems } from "./jobs.js";
 
 // tự thêm vô ==>> khi hết hạn thì show logon lại
@@ -16,31 +15,32 @@ import { showLogin } from "./login.js";
 
 let addEditDiv = null;
 
-// let company = null;
 let itemName = null;
 
-// let position = null;
 let price = null;
 
 let status = null;
 
-// let addingJob = null;
+// mới thêm vô
+let quantity = null;
+let negotiable = null;
+
 let addingItem = null;
 
 /* ////////////////////////////////////////////////// */
 export const handleAddEdit = () => {
-    // addEditDiv = document.getElementById("edit-job");
     addEditDiv = document.getElementById("edit-item");
 
-    // company = document.getElementById("company");
     itemName = document.getElementById("itemName");
 
-    // position = document.getElementById("position");
     price = document.getElementById("price");
 
     status = document.getElementById("status");
 
-    // addingJob = document.getElementById("adding-job");
+    // mới thêm vô
+    quantity = document.getElementById("quantity");
+    negotiable = document.getElementById("negotiable");
+
     addingItem = document.getElementById("adding-item");
 
     const editCancel = document.getElementById("edit-cancel");
@@ -50,23 +50,19 @@ export const handleAddEdit = () => {
         //
         if (inputEnabled && e.target.nodeName === "BUTTON") {
             //
-            // if (e.target === addingJob) {
             if (e.target === addingItem) {
                 //
                 enableInput(false);
 
                 let method = "POST";
 
-                // let url = "/api/v1/jobs";
                 let url = "/api/v1/items";
 
                 // trường hợp tên button "add" đổi thành "update"
-                // if (addingJob.textContent === "update") {
                 if (addingItem.textContent === "update") {
                     //
                     method = "PATCH";
 
-                    // url = `/api/v1/jobs/${addEditDiv.dataset.id}`;
                     url = `/api/v1/items/${addEditDiv.dataset.id}`;
                 }
 
@@ -77,51 +73,45 @@ export const handleAddEdit = () => {
                             "Content-Type": "application/json",
                             Authorization: `Bearer ${token}`,
                         },
-                        // body: JSON.stringify({
-                        //     company: company.value,
-                        //     position: position.value,
-                        //     status: status.value,
-                        // }),
 
                         body: JSON.stringify({
                             itemName: itemName.value,
                             price: price.value,
                             status: status.value,
+                            quantity: quantity.value,
+                            negotiable: negotiable.value,
                         }),
                     });
 
                     const data = await response.json();
-                    console.log("Create Job = ", data);
+                    console.log("Create Item = ", data);
 
                     //
                     if (response.status === 200 || response.status === 201) {
                         //
                         if (response.status === 200) {
                             // a 200 is expected for a successful update
-                            // message.textContent = "The job entry was updated.";
                             message.textContent =
                                 "The item entry was updated successfully!";
                         } else {
                             // a 201 is expected for a successful create
-                            // message.textContent = "The job entry was created.";
                             message.textContent =
                                 "The item entry was created successfully!";
                         }
 
-                        // company.value = "";
                         itemName.value = "";
 
-                        // position.value = "";
                         price.value = "";
 
-                        // status.value = "pending";
                         status.value = "available";
 
-                        // showJobs();
+                        quantity.value = "";
+
+                        negotiable.value = "false";
+
                         showItems();
                     } else if (response.status === 401) {
                         if (data.msg === "Authentication Expired!") {
-                            // message.textContent = data.msg;
                             message.textContent = `${data.msg} Please login again!`;
 
                             setToken(null);
@@ -144,8 +134,7 @@ export const handleAddEdit = () => {
                 //
                 message.textContent = "";
 
-                // Chú ý là quay lại trang show table of job
-                // showJobs();
+                // Chú ý là quay lại trang show table of items
                 showItems();
             }
         }
@@ -162,21 +151,15 @@ Chú ý: Mỗi lần gọi hàm showAddEdit() thì có 2 trường hợp
 1 jobId về và show ra cho Client xem
 
 */
-// export const showAddEdit = async (jobId) => {
 export const showAddEdit = async (itemId) => {
     //
-    // if (!jobId) {
     if (!itemId) {
-        // company.value = "";
         itemName.value = "";
 
-        // position.value = "";
         price.value = "";
 
-        // status.value = "pending";
         status.value = "available";
 
-        // addingJob.textContent = "add";
         addingItem.textContent = "add";
 
         message.textContent = "";
@@ -188,15 +171,6 @@ export const showAddEdit = async (itemId) => {
         enableInput(false);
 
         try {
-            //
-            // const response = await fetch(`/api/v1/jobs/${jobId}`, {
-            //     method: "GET",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //         Authorization: `Bearer ${token}`,
-            //     },
-            // });
-
             const response = await fetch(`/api/v1/items/${itemId}`, {
                 method: "GET",
                 headers: {
@@ -209,23 +183,22 @@ export const showAddEdit = async (itemId) => {
             // console.log(data);
 
             if (response.status === 200) {
-                // company.value = data.job.company;
                 itemName.value = data.item.itemName;
 
-                // position.value = data.job.position;
                 price.value = data.item.price;
 
-                // status.value = data.job.status;
                 status.value = data.item.status;
+
+                quantity.value = data.item.quantity;
+
+                negotiable.value = data.item.negotiable;
 
                 // thay đổi tên gọi của button ==>> chú ý là tên ban đầu là "add"
                 // Chỉ tên gọi thay đổi chứ id vẫn là <button type="button" id="add-job">
-                // addingJob.textContent = "update";
                 addingItem.textContent = "update";
 
                 message.textContent = "";
 
-                // addEditDiv.dataset.id = jobId;
                 addEditDiv.dataset.id = itemId;
 
                 setDiv(addEditDiv);
@@ -240,10 +213,9 @@ export const showAddEdit = async (itemId) => {
                 }
             } else {
                 // might happen if the list has been updated since last display
-                message.textContent = "The jobs entry was not found";
+                message.textContent = "The item entry was not found";
 
                 //
-                // showJobs();
                 showItems();
             }
         } catch (err) {
@@ -251,8 +223,6 @@ export const showAddEdit = async (itemId) => {
 
             message.textContent = "A communications error has occurred.";
 
-            //
-            // showJobs();
             showItems();
         }
 

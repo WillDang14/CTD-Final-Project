@@ -9,7 +9,6 @@ import {
 
 import { showLoginRegister } from "./loginRegister.js";
 
-// import { showJobs } from "./jobs.js";
 import { showItems } from "./jobs.js";
 
 /* ////////////////////////////////////////////////// */
@@ -85,7 +84,6 @@ export const handleRegister = () => {
                             password2.value = "";
 
                             // tam thoi ko show
-                            // showJobs();
                             showItems();
                         } else {
                             message.textContent = data.msg;

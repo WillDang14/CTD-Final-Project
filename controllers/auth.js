@@ -6,18 +6,13 @@ const { BadRequestError, UnauthenticatedError } = require("../errors");
 
 ///////////////////////////////////////////////
 const register = async (req, res) => {
-    /* =================================================== */
-    // Self validate data, actually mongoose does it in Schema
-    // const { name, email, password } = req.body;
-    // if (!name || !email || !password) {
-    //     throw new BadRequestError("Please provide name, email and password!");
-    // }
-    /* =================================================== */
+    // console.log("register req.body = ", req.body); //
 
     const user = await User.create({ ...req.body });
-    // const user = await User.create({ ...tempUser });
-    // console.log(user);
 
+    // console.log("Register - return from DB user = ", user);
+
+    // UserSchema.pre Middleware sẽ được thực thi trong này, mã hóa PW trước khi gửi lên DB
     const token = user.createJWT();
 
     // test
@@ -31,6 +26,8 @@ const register = async (req, res) => {
 
 // Login Controller Setup
 const login = async (req, res) => {
+    // console.log("login req.body = ", req.body);
+
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -38,6 +35,7 @@ const login = async (req, res) => {
     }
 
     const user = await User.findOne({ email });
+    // console.log("login return from DB user = ", user);
 
     // Trường hợp có điền email và PW nhưng điền không đúng (email chẳng hạn)
     if (!user) {
@@ -54,6 +52,7 @@ const login = async (req, res) => {
     }
 
     const token = user.createJWT();
+    // console.log("login token = ", token);
 
     res.status(StatusCodes.OK).json({
         user: { name: user.name },

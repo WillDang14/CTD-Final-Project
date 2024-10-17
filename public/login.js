@@ -9,7 +9,6 @@ import {
 
 import { showLoginRegister } from "./loginRegister.js";
 
-// import { showJobs } from "./jobs.js";
 import { showItems } from "./jobs.js";
 
 let loginDiv = null;
@@ -54,7 +53,8 @@ export const handleLogin = () => {
 
                     if (response.status === 200) {
                         //
-                        message.textContent = `Logon successful.  Welcome ${data.user.name}!`;
+                        // message.textContent = `Logon successful.  Welcome ${data.user.name}!`;
+                        message.innerHTML = `Logon successful. Welcome <span>${data.user.name}!</span>`;
 
                         setToken(data.token);
 
