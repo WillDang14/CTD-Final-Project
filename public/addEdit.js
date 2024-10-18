@@ -7,7 +7,7 @@ import {
     setToken,
 } from "./index.js";
 
-import { showItems } from "./jobs.js";
+import { showItems } from "./items.js";
 
 // tự thêm vô ==>> khi hết hạn thì show logon lại
 // import { showLoginRegister } from "./loginRegister.js";

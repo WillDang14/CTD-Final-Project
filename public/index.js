@@ -52,7 +52,7 @@ export const setToken = (value) => {
 export let message = null;
 
 /* ////////////////////////////////////////////////// */
-import { showItems, handleItems } from "./jobs.js";
+import { showItems, handleItems } from "./items.js";
 
 import { showLoginRegister, handleLoginRegister } from "./loginRegister.js";
 
