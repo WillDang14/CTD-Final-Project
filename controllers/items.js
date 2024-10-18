@@ -7,9 +7,35 @@ const User = require("../models/User");
 
 ///////////////////////////////////////////////
 const getAllItems = async (req, res) => {
-    const items = await Item.find({
-        createdBy: req.user.userId,
-    }).sort("createdAt");
+    console.log("getAllItems req.user = ", req.user);
+    console.log("getAllItems req.query = ", req.query);
+
+    const queryObject = {};
+
+    // default value
+    queryObject.createdBy = req.user.userId;
+
+    if (req.query.status && req.query.status !== "default") {
+        queryObject.status = req.query.status;
+    }
+
+    if (req.query.itemName) {
+        // queryObject.itemName = req.query.itemName;
+
+        queryObject.itemName = { $regex: req.query.itemName, $options: "i" };
+    }
+
+    console.log("queryObject = ", queryObject);
+
+    //
+    const items = await Item.find(queryObject).sort(req.query.sort);
+
+    // console.log("items = ", items);
+    // console.log(items.itemName);
+
+    if (items.length === 0) {
+        throw new NotFoundError(`No items found!`);
+    }
 
     res.status(StatusCodes.OK).json({ count: items.length, items });
 };

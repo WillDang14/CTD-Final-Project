@@ -79,6 +79,37 @@
             <!-- <div id="items" style="display: block"> -->
             <p id="items-message"></p>
 
+            <div class="searchAndSort">
+                <div id="searchItems">
+                    <label for="searchItem">Search by item name:</label>
+                    <input type="text" id="searchItem" />
+                </div>
+
+                <!-- ==================================== -->
+                <div id="searchStatus">
+                    <label for="statusOption">Search by status:</label>
+
+                    <select name="" id="statusOption">
+                        <option value="default">All</option>
+                        <option value="available">Available</option>
+                        <option value="sold-out">Sold</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+
+                <!-- ==================================== -->
+                <div id="sortItems">
+                    <label for="sortOption">Sort by:</label>
+
+                    <select name="" id="sortOption">
+                        <option value="price">Price: Low-High</option>
+                        <option value="-price">Price: High-Low</option>
+                    </select>
+                </div>
+
+                <button type="button" id="searchAndSort">Submit</button>
+            </div>
+
             <table id="items-table">
                 <tr id="items-table-header">
                     <th>Item Name</th>

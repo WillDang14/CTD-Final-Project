@@ -50,6 +50,7 @@ export const handleItems = () => {
                 itemsTable.replaceChildren([itemsTableHeader]);
 
                 showLoginRegister();
+                //
             } else if (e.target.classList.contains("editButton")) {
                 //
                 message.textContent = "";
@@ -66,18 +67,81 @@ export const handleItems = () => {
             }
         }
     });
+
+    /////////////////////////////////////
+    // moi them vo
+    let sortOption = document.getElementById("sortOption");
+
+    let statusOption = document.getElementById("statusOption");
+    let searchItem = document.getElementById("searchItem");
+
+    // button
+    const searchAndSort = document.getElementById("searchAndSort");
+
+    let searchSortValue = {
+        itemName: "",
+        status: "available",
+        sort: "price",
+    };
+
+    //
+    sortOption.addEventListener("change", (e) => {
+        searchSortValue.status = statusOption.value;
+        searchSortValue.sort = sortOption.value;
+        searchSortValue.itemName = searchItem.value;
+
+        showItems(searchSortValue);
+    });
+
+    statusOption.addEventListener("change", (e) => {
+        searchSortValue.status = statusOption.value;
+        searchSortValue.sort = sortOption.value;
+        searchSortValue.itemName = searchItem.value;
+
+        showItems(searchSortValue);
+    });
+
+    //
+    searchAndSort.addEventListener("click", (e) => {
+        searchSortValue.status = statusOption.value;
+        searchSortValue.sort = sortOption.value;
+        searchSortValue.itemName = searchItem.value;
+
+        // console.log("searchSortValue = ", searchSortValue);
+
+        showItems(searchSortValue);
+    });
 };
 
 ///////////////////////////////////////////////////////////////
 // Chú ý: mỗi lần gọi đến hàm showItems()
 // là đều sẽ truy cập đến database
 // ==>>  tức là sẽ lấy data về Client
-export const showItems = async () => {
+// export const showItems = async () => {
+export const showItems = async function (searchSortValue) {
+    //
+    // console.log("showItems sortValue = ", searchSortValue);
+
+    const params = new URLSearchParams(searchSortValue);
+    // console.log(params.toString());
+
     //
     try {
         enableInput(false);
 
-        const response = await fetch("/api/v1/items", {
+        let url = "/api/v1/items/?";
+
+        if (searchSortValue) {
+            // url = url + "sort=" + searchSortValue.sort;
+
+            url = url + params;
+
+            console.log(url);
+        } else {
+            url = url + "sort=" + "price";
+        }
+
+        const response = await fetch(url, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -124,13 +188,19 @@ export const showItems = async () => {
         } else if (response.status === 401) {
             if (data.msg === "Authentication Expired!") {
                 // message.textContent = data.msg;
+                // message.textContent = `${data.msg} Please login again!`;
+
+                message.style.cssText = "color: red;";
+
                 message.textContent = `${data.msg} Please login again!`;
 
-                // setToken(null);
+                setToken(null);
 
                 showLogin();
             }
         } else {
+            message.style.cssText = "color: red;";
+
             message.textContent = data.msg;
         }
     } catch (err) {
@@ -173,6 +243,9 @@ const deleteItems = async (itemId) => {
             //
             if (data.msg === "Authentication Expired!") {
                 // message.textContent = data.msg;
+
+                message.style.cssText = "color: red;";
+
                 message.textContent = `${data.msg} Please login again!`;
 
                 setToken(null);
@@ -198,3 +271,5 @@ const deleteItems = async (itemId) => {
         showItems();
     }
 };
+
+///////////////////////////////////////////////////////////////
