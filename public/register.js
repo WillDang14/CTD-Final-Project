@@ -9,7 +9,7 @@ import {
 
 import { showLoginRegister } from "./loginRegister.js";
 
-import { showItems } from "./jobs.js";
+import { showItems } from "./items.js";
 
 /* ////////////////////////////////////////////////// */
 let registerDiv = null;
