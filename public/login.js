@@ -49,7 +49,7 @@ export const handleLogin = () => {
                     });
 
                     const data = await response.json();
-                    console.log("Login data = ", data);
+                    console.log("Login - data from server = ", data);
 
                     if (response.status === 200) {
                         //
@@ -65,6 +65,8 @@ export const handleLogin = () => {
                         // showJobs();
                         showItems();
                     } else {
+                        message.style.cssText = "color: red;";
+
                         message.textContent = data.msg;
                     }
                 } catch (err) {
